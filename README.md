@@ -48,3 +48,7 @@ export default tseslint.config({
   },
 })
 ```
+=======
+# Route-Render
+A real-time visualizer for popular pathfinding algorithms (Dijkstra, A, BFS, DFS) and maze generation algorithms (Recursive Division, Binary Tree) to explore how they work in finding paths and constructing mazes.
+>>>>>>> 67656c1d730a3f62e064c298c6f15cab36ac5353
