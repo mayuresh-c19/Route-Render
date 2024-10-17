@@ -1,16 +1,27 @@
 import { useState } from "react";
 import { usePathfinding } from "../hooks/usePathFinding";
 import { useTile } from "../hooks/useTile";
-import { MAZES } from "../utils/constants";
+import { ALGORITHMS, MAZES } from "../utils/constants";
 import { resetGrid } from "../utils/resetGrid";
-import { MazeType } from "../utils/types";
+import { AlgorithmType, MazeType } from "../utils/types";
 import { Select } from "./Select";
 import { runMazeAlgorithm } from "../utils/runMazeAlgorithm";
 import { useSpeed } from "../hooks/useSpeed";
+import { PlayButton } from "./PlayButton";
+import { runPathFindingAlgorithm } from "../utils/runPathFindingAlgorithm";
 
 export function Nav() {
   const [isDisabled, setIsDisabled] = useState(false);
-  const { maze, setMaze, grid } = usePathfinding();
+  const {
+    maze,
+    setMaze,
+    grid,
+    setGrid,
+    isGraphVisualized,
+    setIsGraphVisualized,
+    algorithm,
+    setAlgorithm,
+  } = usePathfinding();
   const { startTile, endTile } = useTile();
   const { speed } = useSpeed();
 
@@ -31,7 +42,31 @@ export function Nav() {
       setIsDisabled,
       speed,
     });
+
+    const newGrid = grid.slice();
+    setGrid(newGrid);
+    setIsGraphVisualized(false);
   };
+
+  const handleRunVisualizer = () => {
+    if (isGraphVisualized) {
+      setIsGraphVisualized(false);
+      resetGrid({ grid: grid.slice(), startTile, endTile });
+      return;
+    }
+
+    // Else run the pathfinding algorithm
+    const { traversedTiles, path } = runPathFindingAlgorithm({
+      algorithm,
+      grid,
+      startTile,
+      endTile,
+    });
+
+    console.log("traversedTiles", traversedTiles);
+    console.log("path", path);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-[4.5rem] border-b shadow-gray-600 sm:px-5 px-0">
       <div className="flex items-center lg:justify-between justify-center lg:w-full sm:w-[52rem]">
@@ -44,6 +79,21 @@ export function Nav() {
             onChange={(e) => {
               handleGenerateMaze(e.target.value as MazeType);
             }}
+          />
+
+          <Select
+            label="Graph"
+            value={algorithm}
+            options={ALGORITHMS}
+            onChange={(e) => {
+              setAlgorithm(e.target.value as AlgorithmType);
+            }}
+          />
+
+          <PlayButton
+            isDisabled={isDisabled}
+            isGraphVisualized={isGraphVisualized}
+            handlerRunVisualizer={handleRunVisualizer}
           />
         </div>
       </div>

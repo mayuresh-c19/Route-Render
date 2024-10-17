@@ -10,6 +10,7 @@ export interface MazeSelectType {
   value: MazeType;
 }
 
+
 export type TileType = {
   row: number;
   col: number;
