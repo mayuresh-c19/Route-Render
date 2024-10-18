@@ -13,7 +13,7 @@ function App() {
         <SpeedProvider>
           <div className="h-screen w-screen flex flex-col">
             <Nav isVisualizationRunningRef={isVisualizationRunningRef} />
-            <div className="mt-6"> {}
+            <div className="mt-2"> {}
               <Grid isVisualizationRunningRef={isVisualizationRunningRef} />
             </div>
           </div>
