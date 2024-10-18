@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { usePathfinding } from "../hooks/usePathFinding";
+import { usePathfinding } from "../hooks/usePathfinding";
 import { MAX_COLS, MAX_ROWS } from "../utils/constants";
 import { Tile } from "./Tile";
 import { MutableRefObject, useState } from "react";
